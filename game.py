@@ -3,7 +3,6 @@ import sys
 import ball
 import block
 import pygame
-import text
 from pygame.locals import *
 
 
