@@ -66,7 +66,7 @@ def create_block_series(display_width, block_height, edge_spacing, block_spacing
 #     screen.blit(label, (100, 100))
 
 
-block_width = create_block_series(display_width, block_height, 10, 2, 5, 4, yellow)
+block_width = create_block_series(display_width, block_height, 10, 2, 5, 4, purple)
 
 create_ball(display_width, display_height, ball_size)
 
