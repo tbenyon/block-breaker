@@ -5,8 +5,6 @@ import block
 import pygame
 from pygame.locals import *
 
-
-
 pygame.init()
 
 display_width = 645
@@ -40,7 +38,8 @@ paddle_colour = green
 paddle_direction = 0
 paddle_speed = 10
 
-#myfont = pygame.font.SysFont("monospace", 15)
+font = pygame.font.SysFont("monospace", 15)
+
 
 def create_ball(display_width, display_height, ball_size):
     new_ball = ball.Ball(display_width, display_height, ball_size)
@@ -119,7 +118,7 @@ while lose != True:
 
     if ball_list.sprites() == []:
         lose = True
-        screen.fill(red)
+        #screen.fill(red)
         pygame.display.update()
         pygame.time.delay(2000)
 
@@ -130,13 +129,12 @@ while lose != True:
     block_list.draw(screen)
     paddle_list.draw(screen)
 
+    text = "hello"
+    score_label = font.render(text, 1, red)
+    screen.blit(score_label, (0, 0))
+
     clock.tick(50)
 
     pygame.display.flip()
 
-    pygame.display.update()
-
     screen.fill(black)
-    
-    
-    
