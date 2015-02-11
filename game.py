@@ -1,9 +1,8 @@
 #! /usr/bin/env python3
-import sys
 import ball
 import block
 import pygame
-from pygame.locals import *
+import Input
 
 pygame.init()
 
@@ -60,11 +59,6 @@ def create_block_series(display_width, block_height, edge_spacing, block_spacing
     return block_width
 
 
-# def draw_score():
-#     label = myfont.render(score, 1, green)
-#     screen.blit(label, (100, 100))
-
-
 block_width = create_block_series(display_width, block_height, 10, 2, 5, 4, purple)
 
 create_ball(display_width, display_height, ball_size)
@@ -77,26 +71,10 @@ paddle_list.add(paddle)
 # score = 0
 # draw_score()
 lose = False
+
 while lose != True:
 
-    for event in pygame.event.get():
-        #print (event)  # This print just prints the activity (event in the window)
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                paddle_direction = -1
-            if event.key == pygame.K_RIGHT:
-                paddle_direction = 1
-
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                paddle_direction = 0
-            if event.key == pygame.K_RIGHT:
-                paddle_direction = 0
+    paddle_direction = Input.checkKeyPresses(paddle_direction)
 
     for paddle in paddle_list:
         paddle.move_paddle(paddle_direction, paddle_speed, display_width, paddle_width)
