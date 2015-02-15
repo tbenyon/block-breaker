@@ -59,7 +59,7 @@ def create_block_series(display_width, block_height, edge_spacing, block_spacing
     return block_width
 
 
-block_width = create_block_series(display_width, block_height, 10, 2, 5, 4, purple)
+block_width = create_block_series(display_width, block_height, 10, 2, 10, 4, purple)
 
 create_ball(display_width, display_height, ball_size)
 
@@ -84,7 +84,7 @@ while lose != True:
 
         ball.check_collisions(blocks[0], block_height, ball_size, block_width)# need to adapt this later so that we check collisions if more than one block is hit!!!
 
-        block_list.remove(blocks[0])
+        block_list.remove(blocks)
 
     dictionary_of_collided_paddles = pygame.sprite.groupcollide(ball_list, paddle_list, False, False);
     for ball, i in dictionary_of_collided_paddles.items():
