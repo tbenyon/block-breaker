@@ -45,27 +45,28 @@ def create_ball(display_width, display_height, ball_size):
 
     ball_list.add(new_ball)
 
-def create_block(x, y, width, height, colour):
-    new_block = block.Block(x, y, width, height, colour)
+def create_block(x, y, width, height, lives):
+    new_block = block.Block(x, y, width, height, lives)
 
     block_list.add(new_block)
 
-def create_block_series(display_width, block_height, edge_spacing, block_spacing, columns, rows, colour):
+def create_block_series(display_width, block_height, edge_spacing, block_spacing, columns, rows):
     blocks_width = display_width - (edge_spacing * 2) - (block_spacing * (columns - 1))
     block_width = (blocks_width / columns)
+    lives = 3
     for i in range(0, columns):
         for j in range(0, rows):
-            create_block(edge_spacing + (i * block_width) + (i * block_spacing), edge_spacing + (block_height + block_spacing) * j, block_width, block_height, colour)
+            create_block(edge_spacing + (i * block_width) + (i * block_spacing), edge_spacing + (block_height + block_spacing) * j, block_width, block_height, lives)
     return block_width
 
 
-block_width = create_block_series(display_width, block_height, 10, 2, 10, 4, purple)
+block_width = create_block_series(display_width, block_height, 10, 2, 10, 4)
 
 create_ball(display_width, display_height, ball_size)
 
 clock = pygame.time.Clock()
 
-paddle = block.Block(display_width/2-paddle_width/2, display_height - paddle_height * 1.2, paddle_width, paddle_height, paddle_colour)
+paddle = block.Block(display_width/2-paddle_width/2, display_height - paddle_height * 1.2, paddle_width, paddle_height, 2)
 paddle_list.add(paddle)
 
 # score = 0
@@ -80,11 +81,13 @@ while lose != True:
         paddle.move_paddle(paddle_direction, paddle_speed, display_width, paddle_width)
 
     dictionary_of_collided_balls = pygame.sprite.groupcollide(ball_list, block_list, False, False);
-    for ball, blocks in dictionary_of_collided_balls.items():
+    for ball, hit_blocks in dictionary_of_collided_balls.items():
 
-        ball.check_collisions(blocks[0], block_height, ball_size, block_width)# need to adapt this later so that we check collisions if more than one block is hit!!!
+        ball.check_collisions(hit_blocks[0], block_height, ball_size, block_width)# need to adapt this later so that we check collisions if more than one block is hit!!!
 
-        block_list.remove(blocks)
+        for i in hit_blocks:
+            if i.remove_life() == "dead":
+                block_list.remove(i)
 
     dictionary_of_collided_paddles = pygame.sprite.groupcollide(ball_list, paddle_list, False, False);
     for ball, i in dictionary_of_collided_paddles.items():
