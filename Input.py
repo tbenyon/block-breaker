@@ -6,7 +6,7 @@ from pygame.locals import *
 
 def checkKeyPresses(paddle_direction):
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == pygame.locals.QUIT:
             pygame.quit()
             sys.exit()
 

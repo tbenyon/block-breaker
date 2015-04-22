@@ -35,6 +35,11 @@ class Block(pygame.sprite.Sprite):
         elif self.lives < 1:
             return "dead"
 
+#class Paddle(Block):
+ #   def __init__(self, colour):
+  #      Block.__init__():
+
+
     def move_paddle(self, direction, speed, display_width, paddle_width):
         if direction == 1 and self.rect.x + paddle_width < display_width:
             self.rect.x = self.rect.x + (direction * speed)
