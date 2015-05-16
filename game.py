@@ -2,7 +2,7 @@
 import ball
 import block
 import pygame
-
+import paddle
 import Input
 
 pygame.init()
@@ -32,11 +32,7 @@ purple = (255, 0, 255)
 
 block_height = 30
 
-paddle_width = 100
-paddle_height = 15
-paddle_colour = green
-paddle_direction = 0
-paddle_speed = 10
+
 
 font = pygame.font.SysFont("monospace", 15)
 
@@ -67,19 +63,21 @@ create_ball(display_width, display_height, ball_size)
 
 clock = pygame.time.Clock()
 
-paddle = block.Block(display_width/2-paddle_width/2, display_height - paddle_height * 1.2, paddle_width, paddle_height, 2)
+paddle_width = 150
+paddle_height = 15
+
+paddle = paddle.Paddle(display_width/2-paddle_width/2, display_height - paddle_height * 1.2, paddle_width, paddle_height)
 paddle_list.add(paddle)
 
 # score = 0
 # draw_score()
 lose = False
 
-while lose != True:
 
-    paddle_direction = Input.checkKeyPresses(paddle_direction)
+def gameState():
 
     for paddle in paddle_list:
-        paddle.move_paddle(paddle_direction, paddle_speed, display_width, paddle_width)
+        paddle.move_paddle(display_width)
 
     dictionary_of_collided_balls = pygame.sprite.groupcollide(ball_list, block_list, False, False);
     for ball, hit_blocks in dictionary_of_collided_balls.items():
@@ -98,11 +96,11 @@ while lose != True:
 
     ball_list.update(ball_size, ball_list)
 
-    if ball_list.sprites() == []:
-        lose = True
-        #screen.fill(red)
-        pygame.display.update()
-        pygame.time.delay(2000)
+    # if ball_list.sprites() == []:
+    #     lose = True
+    #     #screen.fill(red)
+    #     pygame.display.update()
+    #     pygame.time.delay(2000)
 
 
     #block_list.check()
@@ -114,6 +112,10 @@ while lose != True:
     text = "hello"
     score_label = font.render(text, 1, red)
     screen.blit(score_label, (0, 0))
+
+while True:
+
+    gameState()
 
     clock.tick(50)
 
